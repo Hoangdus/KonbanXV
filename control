@@ -1,0 +1,10 @@
+Package: com.hoangdus.konban
+Name: Konban
+Depends: mobilesubstrate, ws.hbang.common (>= 1.11), firmware (>= 15.0)
+Conflicts: me.nepeta.konban, com.nicho1asdev.konban
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Replaces the "Today" view with an app of your choice. Rewritten for iOS 13 and 14 by nicho1asdev.
+Maintainer: HoangDus
+Author: nicho1asdev, Nepeta, HoangDus
+Section: Tweaks
