@@ -10,8 +10,8 @@
 +(UIView *)viewFor:(NSString *)bundleID {
     SBApplication *app = [Konban app:bundleID];
     // [Konban launch:bundleID];
+    FBScene *scene = [Konban getMainSceneForApp:app];
     [Konban forceBackgrounded:NO forApp:app];
-    FBScene *scene = [Konban getMainSceneForApp:app]; //no longer needed
     // [Konban setForeground:app foregroundvalue:YES];
     [Konban wakeScene:scene];
 
