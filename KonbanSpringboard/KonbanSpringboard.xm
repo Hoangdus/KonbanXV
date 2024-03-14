@@ -16,7 +16,7 @@ BOOL hideStatusBar;
 BOOL useInNC = true;
 CGFloat scale = 0.8;
 CGFloat cornerRadius = 16;
-NSString *bundleID = @"com.miro.uyou";
+NSString *bundleID = @"com.apple.mobilesafari";
 // UIViewController *ourVC = nil;
 
 CGRect insetByPercent(CGRect f, CGFloat s) {
@@ -91,14 +91,14 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     }
     else if (!enabled) return;
 
-    if (enabled && self.konHostView){
-      self.konHostView.frame = insetByPercent(self.view.frame, scale);
-      self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
-      [Konban rehost:bundleID];
-      NSLog(@"[Konban] rehosting!");
-      return;
-      // NSLog(@"[Konban] %s", "konHostView exists");
-    }
+    // if (enabled && self.konHostView){
+    //   self.konHostView.frame = insetByPercent(self.view.frame, scale);
+    //   self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
+    //   [Konban rehost:bundleID];
+    //   NSLog(@"[Konban] rehosting!");
+    //   return;
+    //   // NSLog(@"[Konban] %s", "konHostView exists");
+    // }
 
     if (enabled) {
         for (UIView *view in [self.view subviews]) {
@@ -119,9 +119,8 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         NSLog(@"[Konban] %@", bundleID);
 
         @try {
-        [Konban launch:bundleID];
-        self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
         [self.konSpinnerView stopAnimating];
+        self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
         }
         @catch (NSException *exception){
           if (exception) {

@@ -4,7 +4,7 @@
 BOOL enabled;
 BOOL hideStatusBar;
 HBPreferences *preferences;
-NSString *bundleID = @"com.apple.calculator";
+NSString *bundleID = @"com.apple.mobilesafari";
 BOOL konbanHidden = NO;
 UIView *statusBar = nil;
 
