@@ -18,9 +18,9 @@
 			<key>cellClass</key>
 			<string>HBTwitterCell</string>
 			<key>label</key>
-			<string>nicho1asdev</string>
+			<string>HoangDus</string>
 			<key>user</key>
-			<string>itsnicho1as</string>
+			<string>Hoangdev23</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -38,7 +38,7 @@
 			<key>PostNotification</key>
 			<string>me.nepeta.konban/ReloadPrefs</string>
 		</dict>
-		<dict>
+		<!-- <dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
@@ -53,7 +53,7 @@
 			<true/>
 			<key>PostNotification</key>
 			<string>me.nepeta.konban/ReloadPrefs</string>
-		</dict>
+		</dict> -->
 		<dict>
 			<key>cell</key>
 			<string>PSLinkCell</string>
@@ -132,7 +132,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Konban by nicho1asdev &amp; Nepeta</string>
+			<string>Konban by HoangDus &amp; nicho1asdev &amp; Nepeta</string>
 			<key>isStaticText</key>
 			<true/>
 		</dict>
@@ -160,28 +160,11 @@
 			<key>cellClass</key>
 			<string>HBLinkTableCell</string>
 			<key>label</key>
-			<string>DONATE_TO_NICHO1ASDEV</string>
+			<string>DONATE_TO_HOANGDUS</string>
 			<key>subtitle</key>
 			<string>SUPPORT_ME</string>
 			<key>url</key>
-			<string>https://www.paypal.me/nicholasdev</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSLinkCell</string>
-			<key>label</key>
-			<string>Patreons❤️</string>
-			<key>items</key>
-			<array>
-				<dict>
-					<key>cellClass</key>
-					<string>HBTwitterCell</string>
-					<key>label</key>
-					<string>Anthony Carbone</string>
-					<key>user</key>
-					<string>acarbone_0314</string>
-				</dict>
-			</array>
+			<string>https://ko-fi.com/hoangdus</string>
 		</dict>
 	</array>
 	<!-- <key>title</key>

@@ -4,7 +4,7 @@
 	cell = PSLinkCell;
 	detail = KONPrefsListController;
 	isController = 1;
-	label = Konban;
+	label = KonbanXV;
 	icon = icon.png;
     };
 }
