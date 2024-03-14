@@ -8,12 +8,10 @@
 
 //Got it mostly working now, keyboard is still a bit wonky and scrolling is broken when  
 +(UIView *)viewFor:(NSString *)bundleID {
+    [Konban launch:bundleID];
     SBApplication *app = [Konban app:bundleID];
-    // [Konban launch:bundleID];
     [Konban forceBackgrounded:NO forApp:app];
-    FBScene *scene = [Konban getMainSceneForApp:app]; //no longer needed
-    // [Konban setForeground:app foregroundvalue:YES];
-    [Konban wakeScene:scene];
+    [Konban setForeground:app foregroundvalue:YES];
 
     return [Konban createLayerHostView:bundleID];
 }
@@ -24,29 +22,13 @@
 
 //_setContentState got axed after iOS 14 for some fucking reason
 
-// +(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value{
-//   // [scene _setContentState:2]; // 2 == ready, 1 == preparing, 0 == not ready
-//   FBScene *scene = [Konban getMainSceneForApp:app];
-//   FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];//ios 15 fix
-//   [sceneSettings setForeground:value]; // This is important for the view to be interactable.
-//   [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
-//   NSLog(@"[Konban] %s: %d", "set foreground success", value);
-// }
-
-+(void)wakeScene:(FBScene *)scene {
++(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value{
   // [scene _setContentState:2]; // 2 == ready, 1 == preparing, 0 == not ready
-  FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];
-  [sceneSettings setForeground:YES]; // This is important for the view to be interactable.
+  FBScene *scene = [Konban getMainSceneForApp:app];
+  FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];//ios 15 fix
+  [sceneSettings setForeground:value]; // This is important for the view to be interactable.
   [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
-  NSLog(@"[Konban] %s", "wake success");
-}
-
-+(void)sleepScene:(FBScene *)scene {
-  // [scene _setContentState:0]; //2 == ready, 1 == preparing, 0 == not ready
-  FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];
-  [sceneSettings setForeground:NO];
-  [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
-  NSLog(@"[Konban] %s", "sleep success");
+  NSLog(@"[Konban] %s: %d", "set foreground success", value);
 }
 
 +(void)forceBackgrounded:(BOOL)backgrounded forApp:(SBApplication *)app {
@@ -71,18 +53,16 @@
 +(void)rehost:(NSString *)bundleID { //not sure why this doesn't get called
     SBApplication *app = [Konban app:bundleID];
     [Konban launch:bundleID];
-    // [Konban setForeground:app foregroundvalue:YES];
     [Konban forceBackgrounded:NO forApp:app];
-    [Konban wakeScene:[Konban getMainSceneForApp:app]];
+    [Konban setForeground:app foregroundvalue:YES];
     NSLog(@"[Konban] %s", "rehost success");
 
 }
 
 +(void)dehost:(NSString *)bundleID {
     SBApplication *app = [Konban app:bundleID];
-    // [Konban setForeground:app foregroundvalue:NO];
     [Konban forceBackgrounded:YES forApp:app];
-    [Konban sleepScene:[Konban getMainSceneForApp:app]];
+    [Konban setForeground:app foregroundvalue:NO];
     NSLog(@"[Konban] %s", "dehost success");
 }
 

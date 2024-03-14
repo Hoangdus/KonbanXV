@@ -50,9 +50,7 @@
 +(void)forceBackgrounded:(BOOL)backgrounded forApp:(SBApplication *)app;
 +(void)rehost:(NSString *)bundleID;
 +(void)dehost:(NSString *)bundleID;
-+(void)wakeScene:(id)scene;
-+(void)sleepScene:(id)scene;
-// +(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value;
++(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value;
 + (FBScene *)getMainSceneForApp:(SBApplication *)application;
 
 @end
