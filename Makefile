@@ -1,6 +1,7 @@
 export TARGET = iphone:latest:12.0
 export THEOS_DEVICE_IP = localhost
 export THEOS_DEVICE_PORT=2222
+# export THEOS_DEVICE_USER=mobile
 
 export DEBUG = 1
 export FINALPACKAGE = 0
