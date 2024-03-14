@@ -10,8 +10,8 @@
 +(UIView *)viewFor:(NSString *)bundleID {
     SBApplication *app = [Konban app:bundleID];
     // [Konban launch:bundleID];
-    FBScene *scene = [Konban getMainSceneForApp:app];
     [Konban forceBackgrounded:NO forApp:app];
+    FBScene *scene = [Konban getMainSceneForApp:app]; //no longer needed
     // [Konban setForeground:app foregroundvalue:YES];
     [Konban wakeScene:scene];
 
@@ -32,7 +32,6 @@
 //   [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
 //   NSLog(@"[Konban] %s: %d", "set foreground success", value);
 // }
-
 
 +(void)wakeScene:(FBScene *)scene {
   // [scene _setContentState:2]; // 2 == ready, 1 == preparing, 0 == not ready

@@ -1,10 +1,10 @@
 Package: com.hoangdus.konban
-Name: Konban
+Name: KonbanXV
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11), firmware (>= 15.0)
 Conflicts: me.nepeta.konban, com.nicho1asdev.konban
-Version: 1.0.0
+Version: 0.0.1
 Architecture: iphoneos-arm
-Description: Replaces the "Today" view with an app of your choice. Updated for iOS 15 and 16 by HoangDus.
-Maintainer: HoangDus
-Author: HoangDus, nicho1asdev, Nepeta 
+Description: Replaces the "Today" view with an app of your choice. Rewritten for iOS 15 and 16 by HoangDus.
+Maintainer: nicho1asdev
+Author: HoangDus, nicho1asdev, Nepeta
 Section: Tweaks

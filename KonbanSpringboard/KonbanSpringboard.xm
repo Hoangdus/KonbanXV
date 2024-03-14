@@ -95,9 +95,9 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
       self.konHostView.frame = insetByPercent(self.view.frame, scale);
       self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
       [Konban rehost:bundleID];
-      NSLog(@"[Konban] %s", "konHostView exists");
       NSLog(@"[Konban] rehosting!");
       return;
+      // NSLog(@"[Konban] %s", "konHostView exists");
     }
 
     if (enabled) {

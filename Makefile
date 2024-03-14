@@ -4,8 +4,6 @@ export THEOS_DEVICE_PORT=2222
 
 export DEBUG = 1
 export FINALPACKAGE = 0
-export THEOS_PACKAGE_SCHEME=rootless
-
 include $(THEOS)/makefiles/common.mk
 
 SUBPROJECTS += KonbanSpringboard KonbanClient Prefs
