@@ -6,7 +6,7 @@
     return [[%c(SBApplicationController) sharedInstance] applicationWithBundleIdentifier:bundleID];
 }
 
-//Got it mostly working now, keyboard is still a bit wonky and scrolling is broken when  
+//Got it mostly working now, keyboard is still probably not rendering(haven't seen it in testing tho)
 +(UIView *)viewFor:(NSString *)bundleID {
     [Konban launch:bundleID];
     SBApplication *app = [Konban app:bundleID];
@@ -28,7 +28,8 @@
   FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];//ios 15 fix
   [sceneSettings setForeground:value]; // This is important for the view to be interactable.
   [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
-  NSLog(@"[Konban] %s: %d", "set foreground success", value);
+  NSLog(@"[Konban] setForeground scene state %lu", scene.contentState);
+  NSLog(@"[Konban] %s", "set foreground success");
 }
 
 +(void)forceBackgrounded:(BOOL)backgrounded forApp:(SBApplication *)app {
@@ -36,19 +37,19 @@
   FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy]; //ios 15 fix
   [sceneSettings setBackgrounded:backgrounded];
   [scene updateSettings:sceneSettings withTransitionContext:nil];
+  NSLog(@"[Konban] forceBackgrounded scene state %lu", scene.contentState);
   NSLog(@"[Konban] %s", "force backgrounded success");
 }
-
 
 +(id)createLayerHostView:(NSString *)bundleID { // This is the new implementation to get the view instead of getting it via a FBSceneHostManager which was the old way.
   SBApplication *app = [Konban app:bundleID];
   FBScene *scene = [Konban getMainSceneForApp:app];
   _UISceneLayerHostContainerView *layerHostView=[[objc_getClass("_UISceneLayerHostContainerView") alloc] initWithScene:scene debugDescription:nil]; //updated for ios 15
   [layerHostView _setPresentationContext:[[objc_getClass("UIScenePresentationContext") alloc] _initWithDefaultValues]];
+  NSLog(@"[Konban] createLayerHostView scene state %lu", scene.contentState);
   NSLog(@"[Konban] %s", "createLayerHostView success");
   return layerHostView;
 }
-
 
 +(void)rehost:(NSString *)bundleID { //not sure why this doesn't get called
     SBApplication *app = [Konban app:bundleID];
@@ -76,7 +77,7 @@
     for(NSString *identifier in [scenes allKeys]){
         if([identifier containsString:app.bundleIdentifier]){
             if ([scenes[identifier] isKindOfClass:[%c(FBScene) class]]) {
-                NSLog(@"[Konban] returning %@",identifier);
+                // NSLog(@"[Konban] returning %@",identifier);
                 return scenes[identifier];
             }
         }

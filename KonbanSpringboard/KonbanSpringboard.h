@@ -31,6 +31,7 @@
 
 @property (nonatomic, retain) UIView *konHostView;
 @property (nonatomic, retain) UIActivityIndicatorView *konSpinnerView;
+@property (nonatomic, retain) dispatch_source_t deHostTimer;
 
 @end
 
