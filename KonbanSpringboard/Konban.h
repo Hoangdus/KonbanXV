@@ -51,6 +51,7 @@
 +(void)rehost:(NSString *)bundleID;
 +(void)dehost:(NSString *)bundleID;
 +(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value;
++(id)createLayerHostView:(NSString *)bundleID;
 + (FBScene *)getMainSceneForApp:(SBApplication *)application;
 
 @end

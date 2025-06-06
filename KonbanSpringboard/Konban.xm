@@ -8,8 +8,8 @@
 
 //Got it mostly working now, keyboard is still probably not rendering(haven't seen it in testing tho)
 +(UIView *)viewFor:(NSString *)bundleID {
-    [Konban launch:bundleID];
     SBApplication *app = [Konban app:bundleID];
+    [Konban launch:bundleID];
     [Konban forceBackgrounded:NO forApp:app];
     [Konban setForeground:app foregroundvalue:YES];
 
@@ -57,7 +57,6 @@
     [Konban forceBackgrounded:NO forApp:app];
     [Konban setForeground:app foregroundvalue:YES];
     NSLog(@"[Konban] %s", "rehost success");
-
 }
 
 +(void)dehost:(NSString *)bundleID {

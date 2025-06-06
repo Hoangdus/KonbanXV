@@ -28,7 +28,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
 %property (nonatomic, retain) UIView *konHostView;
 %property (nonatomic, retain) UIActivityIndicatorView *konSpinnerView;
-%property (nonatomic, retain) dispatch_source_t deHostTimer;
 
 -(void)viewWillAppear:(bool)arg1 {
     %orig;
@@ -67,15 +66,12 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
     if (enabled && self.konHostView){
       NSLog(@"[Konban] %s", "konHostView exists");
-      if(self.deHostTimer){
-        dispatch_source_cancel(self.deHostTimer);
-        self.deHostTimer = nil;
-        self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
-        self.konHostView.layer.cornerRadius = cornerRadius;
-        [self.view addSubview:self.konHostView];
-        [Konban rehost:bundleID];
-      }
-      return; 
+      self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
+      self.konHostView.layer.cornerRadius = cornerRadius;
+      self.konHostView.hidden = NO;
+      [self.view addSubview:self.konHostView];
+      [Konban rehost:bundleID];
+      return;
     }
 
     if (enabled) {
@@ -91,21 +87,24 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
           self.konSpinnerView.transform = CGAffineTransformMakeScale(scale, scale);
           self.konSpinnerView.layer.cornerRadius = cornerRadius;
           self.konSpinnerView.layer.masksToBounds = true;
-          [self.view addSubview:self.konSpinnerView];
         }
+        [self.view addSubview:self.konSpinnerView];
         [self.konSpinnerView startAnimating];
 
         // visible = YES;
         NSLog(@"[Konban] bundleID: %@", bundleID);
 
         @try {
-        [self.konSpinnerView stopAnimating];
         self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
         }
         @catch (NSException *exception){
           if (exception) {
             %log(@"konView ERROR:%@", exception);
           }
+        }
+
+        if(self.konHostView){
+        [self.konSpinnerView stopAnimating];
         }
 
         %log(@"[konban] konHostView: %@", self.konHostView);
@@ -129,7 +128,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     }
 }
 
--(void)viewDidDisappear:(bool)arg1 {
+-(void)viewWillDisappear:(bool)arg1 {
     %orig;
     CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarShow", nil, nil, true);
 
@@ -137,19 +136,8 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     if (!self.konHostView || !enabled){
         return;
     } 
-
-    if(!self.deHostTimer){
-      self.deHostTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());    
-    }
-    
     [self.konHostView removeFromSuperview];
-
-    dispatch_source_set_timer(self.deHostTimer, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC), DISPATCH_TIME_FOREVER, 0);
-    dispatch_source_set_event_handler(self.deHostTimer, ^{
-        [Konban dehost:bundleID];
-        // self.konHostView = nil; //set host view to nil will crash springboard for some reason. SO DON'T.
-    });
-    dispatch_resume(self.deHostTimer);
+    [Konban dehost:bundleID];
 }
 
 %end
