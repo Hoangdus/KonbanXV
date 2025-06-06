@@ -8,7 +8,7 @@ export FINALPACKAGE = 0
 export THEOS_PACKAGE_SCHEME=rootless
 include $(THEOS)/makefiles/common.mk
 
-SUBPROJECTS += KonbanSpringboard KonbanClient Prefs
+SUBPROJECTS += KonbanSpringboard KonbanClient KonbanPrefs
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
