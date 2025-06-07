@@ -142,14 +142,14 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
 %end
 
-/*void changeApp() {
-    NSMutableDictionary *appList = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/me.nepeta.konban-app.plist"];
+void changeApp() {
+    	NSDictionary *appList = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"me.nepeta.konban-app"];
     if (!appList) return;
 
-    if ([appList objectForKey:@"App"]) {
-        bundleID = [appList objectForKey:@"App"];
+    if ([appList objectForKey:@"selectedApplication"]) {
+        bundleID = [appList objectForKey:@"selectedApplication"];
     }
-}*/
+}
 
 %ctor{
     preferences = [[HBPreferences alloc] initWithIdentifier:@"me.nepeta.konban"];
@@ -164,6 +164,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
     if (!enabled) return;
 
-    /*changeApp();
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)changeApp, (CFStringRef)@"me.nepeta.konban/ReloadApp", NULL, (CFNotificationSuspensionBehavior)kNilOptions);*/
+    changeApp();
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)changeApp, (CFStringRef)@"me.nepeta.konban/ReloadApp", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
 }

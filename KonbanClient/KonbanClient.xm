@@ -8,14 +8,14 @@ NSString *bundleID = @"com.apple.mobilesafari";
 BOOL konbanHidden = NO;
 UIView *statusBar = nil;
 
-/*void changeApp() {
+void changeApp() {
     NSMutableDictionary *appList = [[NSMutableDictionary alloc] initWithContentsOfFile:@"/var/mobile/Library/Preferences/me.nepeta.konban-app.plist"];
     if (!appList) return;
     
-    if ([appList objectForKey:@"App"]) {
-        bundleID = [appList objectForKey:@"App"];
+    if ([appList objectForKey:@"selectedApplication"]) {
+        bundleID = [appList objectForKey:@"selectedApplication"];
     }
-}*/
+}
 
 // void konHideStatusBar() {
 //     if (!enabled || !hideStatusBar) return;
@@ -96,8 +96,8 @@ UIView *statusBar = nil;
     [preferences registerBool:&enabled default:YES forKey:@"Enabled"];
     [preferences registerBool:&hideStatusBar default:YES forKey:@"HideStatusBar"];
 
-    /*changeApp();
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)changeApp, (CFStringRef)@"me.nepeta.konban/ReloadApp", NULL, (CFNotificationSuspensionBehavior)kNilOptions);*/
+    changeApp();
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)changeApp, (CFStringRef)@"me.nepeta.konban/ReloadApp", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
     // CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)konHideStatusBar, (CFStringRef)@"me.nepeta.konban/StatusBarHide", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
     // CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)konShowStatusBar, (CFStringRef)@"me.nepeta.konban/StatusBarShow", NULL, (CFNotificationSuspensionBehavior)kNilOptions);
 }

@@ -1,6 +1,6 @@
 Package: com.hoangdus.konban
 Name: KonbanXV
-Depends: mobilesubstrate, ws.hbang.common (>= 1.11), firmware (>= 15.0)
+Depends: mobilesubstrate, ws.hbang.common (>= 1.11), firmware (>= 15.0), com.opa334.altlist
 Conflicts: me.nepeta.konban, com.nicho1asdev.konban
 Version: 0.0.1
 Architecture: iphoneos-arm
