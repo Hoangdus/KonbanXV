@@ -118,7 +118,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         [self.view bringSubviewToFront:self.konHostView];
         self.konHostView.hidden = NO;
 
-        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarHide", nil, nil, true);
+        // CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarHide", nil, nil, true);
 
         if (!self.konHostView) { // loop through these steps until the application is launched and our view is returned.
             [self.konSpinnerView startAnimating];
@@ -130,7 +130,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
 -(void)viewWillDisappear:(bool)arg1 {
     %orig;
-    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarShow", nil, nil, true);
+    // CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarShow", nil, nil, true);
 
     // visible = NO;
     if (!self.konHostView || !enabled){
@@ -158,9 +158,9 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     [preferences registerFloat:&scale default:0.8 forKey:@"Scale"];
     [preferences registerBool:&hideStatusBar default:YES forKey:@"HideStatusBar"];
     [preferences registerBool:&useInNC default:YES forKey:@"useInNotificationCenter"];
-    /*dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/com.nicho1asdev.konban.list"];
+    // dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/com.nicho1asdev.konban.list"];
 
-    if (dpkgInvalid) %init(dpkgInvalid);*/
+    // if (dpkgInvalid) %init(dpkgInvalid);
 
     if (!enabled) return;
 
