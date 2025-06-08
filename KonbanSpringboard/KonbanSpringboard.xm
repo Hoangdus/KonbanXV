@@ -37,7 +37,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 %property (nonatomic, retain) UIView *konHostView;
 %property (nonatomic, retain) UIActivityIndicatorView *konSpinnerView;
 
--(void)viewWillAppear:(bool)arg1 {
+-(void)viewDidAppear:(bool)arg1 {
     %orig;
 
     if(!enabled || ([KonbanSpringboard isLocked] && !useInNC)){
@@ -64,6 +64,20 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         view.hidden = YES;
     }
 
+    if([[self.konHostView description] containsString: bundleID]){
+        NSLog(@"[Konban] %s", "app hasn't been changed");
+    }
+
+    if (enabled && self.konHostView && [[self.konHostView description] containsString: bundleID]){
+        NSLog(@"[Konban] %s", "konHostView exists");
+        self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
+        self.konHostView.layer.cornerRadius = cornerRadius;
+        self.konHostView.hidden = NO;
+        [self.view addSubview:self.konHostView];
+        [Konban rehost:bundleID];
+        return;
+    }
+
     if (enabled) {
         [self.konSpinnerView stopAnimating];
         // [self.konSpinnerView removeFromSuperview];
@@ -83,6 +97,12 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 
         // visible = YES;
         NSLog(@"[Konban] bundleID: %@", bundleID);
+        
+        if(self.konHostView){
+            [(_UISceneLayerHostContainerView *)self.konHostView invalidate];
+            [self.konHostView removeFromSuperview];
+            self.konHostView = nil;
+        }
 
         @try {
             [self.konSpinnerView stopAnimating];
@@ -92,10 +112,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
             if (exception) {
                 %log(@"konView ERROR:%@", exception);
             }
-        }
-
-        if(self.konHostView){
-            [self.konSpinnerView stopAnimating];
         }
 
         %log(@"[konban] konHostView: %@", self.konHostView);
@@ -114,7 +130,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         if (!self.konHostView) { // loop through these steps until the application is launched and our view is returned.
             [self.konSpinnerView startAnimating];
             [self.view bringSubviewToFront:self.konSpinnerView];
-            [self performSelector:@selector(viewWillAppear:) withObject:nil afterDelay:0.5];
+            [self performSelector:@selector(viewDidAppear:) withObject:nil afterDelay:0.5];
         }
     }
 }
