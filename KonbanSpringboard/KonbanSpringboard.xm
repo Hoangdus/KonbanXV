@@ -8,7 +8,7 @@ BOOL enabled;
 BOOL enabledCoverSheet;
 BOOL enabledHomeScreen;
 BOOL hideStatusBar;
-BOOL useInNC = true;
+BOOL useInNC = false;
 CGFloat scale = 0.8;
 CGFloat cornerRadius = 16;
 NSString *bundleID = @"com.apple.mobilesafari";
@@ -19,6 +19,19 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     return CGRectMake(f.origin.x + f.size.width * originScale, f.origin.y + f.size.height * originScale, f.size.width * s, f.size.height * s);
 }
 
+@implementation KonbanSpringboard
+
++(BOOL)isLocked{
+    SBLockStateAggregator *lockStateAggregator = [%c(SBLockStateAggregator) sharedInstance];
+    NSUInteger lockState = MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState");
+    if (lockState == 1) {
+        return YES;
+    }
+    return NO;
+}
+
+@end
+
 %hook SBTodayViewController
 
 %property (nonatomic, retain) UIView *konHostView;
@@ -27,9 +40,17 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 -(void)viewWillAppear:(bool)arg1 {
     %orig;
 
-    if(!enabled){
+    if(!enabled || ([KonbanSpringboard isLocked] && !useInNC)){
         for (UIView *view in [self.view subviews]) {
-            view.hidden = NO;
+            if(view.hidden){
+                view.hidden = NO;
+            }
+        }
+
+        if(self.konSpinnerView){
+            [(_UISceneLayerHostContainerView *)self.konHostView invalidate];
+            [self.konHostView removeFromSuperview];
+            self.konHostView = nil;
         }
 
         if(self.konSpinnerView){
@@ -39,18 +60,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         return;
     }
 
-    //TODO: comeback to this later
-    // SBLockStateAggregator *lockStateAggregator = [%c(SBLockStateAggregator) sharedInstance];
-    // if ((MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState") != 0 || self.view.tag == 5)) {
-    //     if (!useInNC && MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState") == 1) {
-    //         [self.konHostView removeFromSuperview]; 
-    //         for (UIView *view in [self.view subviews]) {
-    //             view.hidden = NO;
-    //         }
-    //         return;
-    //     }
-    // }
-
     for (UIView *view in [self.view subviews]) {
         view.hidden = YES;
     }
@@ -58,7 +67,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     if (enabled) {
         [self.konSpinnerView stopAnimating];
         // [self.konSpinnerView removeFromSuperview];
-        // [self.konHostView removeFromSuperview];
+        [self.konHostView removeFromSuperview];
 
         if (!self.konSpinnerView){
             self.konSpinnerView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
@@ -115,13 +124,18 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     // CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), (CFStringRef)@"me.nepeta.konban/StatusBarShow", nil, nil, true);
 
     // visible = NO;
-    if (!self.konHostView || !enabled){
+    if (!self.konHostView || !enabled || ([KonbanSpringboard isLocked] && !useInNC)){
         return;
     } 
 
-    [(_UISceneLayerHostContainerView *)self.konHostView invalidate];
+    // if(){
+    //     NSLog(@"[Konban] %s", "this is in NC");
+    //     return;
+    // }
+
+    // [(_UISceneLayerHostContainerView *)self.konHostView invalidate];
     [self.konHostView removeFromSuperview];
-    self.konHostView = nil;
+    // self.konHostView = nil;
     [Konban dehost:bundleID];
 }
 
@@ -141,8 +155,8 @@ void changeApp() {
     [preferences registerBool:&enabled default:YES forKey:@"Enabled"];
     [preferences registerFloat:&cornerRadius default:16 forKey:@"CornerRadius"];
     [preferences registerFloat:&scale default:0.8 forKey:@"Scale"];
-    [preferences registerBool:&hideStatusBar default:YES forKey:@"HideStatusBar"];
-    [preferences registerBool:&useInNC default:YES forKey:@"useInNotificationCenter"];
+    // [preferences registerBool:&hideStatusBar default:NO forKey:@"HideStatusBar"];
+    // [preferences registerBool:&useInNC default:NO forKey:@"useInNotificationCenter"];
     // dpkgInvalid = ![[NSFileManager defaultManager] fileExistsAtPath:@"/var/lib/dpkg/info/com.nicho1asdev.konban.list"];
 
     // if (dpkgInvalid) %init(dpkgInvalid);

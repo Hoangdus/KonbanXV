@@ -20,3 +20,9 @@
 @interface SBDeviceApplicationSceneHandle
 	-(FBScene *)scene;
 @end
+
+@interface KonbanSpringboard: NSObject
+
++(BOOL)isLocked;
+
+@end
