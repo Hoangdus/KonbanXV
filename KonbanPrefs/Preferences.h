@@ -1,4 +1,5 @@
 #import <rootless.h>
+#import <AltList/ATLApplicationListSelectionController.h>
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import <CepheiPrefs/HBRootListController.h>

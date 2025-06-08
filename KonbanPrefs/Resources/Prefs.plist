@@ -11,8 +11,16 @@
 			<string>HBImageTableCell</string>
 			<key>icon</key>
 			<string>konban.png</string>
-			<key>footerText</key>
-			<string>No respring required except for the enabled switch.</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>DONATE_TO_HOANGDUS</string>
+			<key>subtitle</key>
+			<string>SUPPORT_ME</string>
+			<key>url</key>
+			<string>https://ko-fi.com/hoangdus</string>
 		</dict>
 		<dict>
 			<key>cellClass</key>
@@ -21,6 +29,22 @@
 			<string>HoangDus</string>
 			<key>user</key>
 			<string>Hoangdev23</string>
+		</dict>
+		<dict>
+			<key>cellClass</key>
+			<string>HBLinkTableCell</string>
+			<key>label</key>
+			<string>GitHub</string>
+			<key>subtitle</key>
+			<string>SOURCE_CODE</string>
+			<key>enabled</key>
+			<true/>
+			<key>url</key>
+			<string>https://github.com/Hoangdus/KonbanXV</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -82,6 +106,8 @@
 			<true/>
 			<key>alphabeticIndexingEnabled</key>
 			<true/>
+			<key>showIdentifiersAsSubtitle</key>
+			<true />
 			<key>PostNotification</key>
 			<string>me.nepeta.konban/ReloadApp</string>
 		</dict>
@@ -153,30 +179,8 @@
 			<key>label</key>
 			<string>RESPRING</string>
 		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>GitHub</string>
-			<key>subtitle</key>
-			<string>SOURCE_CODE</string>
-			<key>enabled</key>
-			<true/>
-			<key>url</key>
-			<string>https://github.com/Hoangdus/KonbanXV</string>
-		</dict>
-		<dict>
-			<key>cellClass</key>
-			<string>HBLinkTableCell</string>
-			<key>label</key>
-			<string>DONATE_TO_HOANGDUS</string>
-			<key>subtitle</key>
-			<string>SUPPORT_ME</string>
-			<key>url</key>
-			<string>https://ko-fi.com/hoangdus</string>
-		</dict>
 	</array>
-	<!-- <key>title</key>
-	<string>Konban</string> -->
+	<key>title</key>
+	<string>KonbanXV</string>
 </dict>
 </plist>
