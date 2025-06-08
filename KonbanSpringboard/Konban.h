@@ -24,6 +24,7 @@
 @interface _UISceneLayerHostContainerView : UIView
 - (id)initWithScene:(id)arg1 debugDescription:(id)arg2;
 - (void)_setPresentationContext:(id)arg1;
+- (void)invalidate;
 @end
 
 @interface UIScenePresentationContext : NSObject

@@ -64,16 +64,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
       view.hidden = YES;
     }
 
-    if (enabled && self.konHostView){
-      NSLog(@"[Konban] %s", "konHostView exists");
-      self.konHostView.transform = CGAffineTransformMakeScale(scale, scale);
-      self.konHostView.layer.cornerRadius = cornerRadius;
-      self.konHostView.hidden = NO;
-      [self.view addSubview:self.konHostView];
-      [Konban rehost:bundleID];
-      return;
-    }
-
     if (enabled) {
         [self.konSpinnerView stopAnimating];
         // [self.konSpinnerView removeFromSuperview];
@@ -136,7 +126,10 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     if (!self.konHostView || !enabled){
         return;
     } 
+
+    [(_UISceneLayerHostContainerView *)self.konHostView invalidate];
     [self.konHostView removeFromSuperview];
+    self.konHostView = nil;
     [Konban dehost:bundleID];
 }
 
