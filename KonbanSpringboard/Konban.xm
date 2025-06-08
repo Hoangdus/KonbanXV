@@ -17,38 +17,38 @@
 }
 
 +(void)launch:(NSString *)bundleID {
-  [[UIApplication sharedApplication] launchApplicationWithIdentifier:bundleID suspended:YES]; // When launching the app suspended, it doesn't appear for the user or even show in switcher
+    [[UIApplication sharedApplication] launchApplicationWithIdentifier:bundleID suspended:YES]; // When launching the app suspended, it doesn't appear for the user or even show in switcher
 }
 
 //_setContentState got axed after iOS 14 for some fucking reason
 
 +(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value{
-  // [scene _setContentState:2]; // 2 == ready, 1 == preparing, 0 == not ready
-  FBScene *scene = [Konban getMainSceneForApp:app];
-  FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];//ios 15 fix
-  [sceneSettings setForeground:value]; // This is important for the view to be interactable.
-  [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
-  NSLog(@"[Konban] setForeground scene state %lu", scene.contentState);
-  NSLog(@"[Konban] %s", "set foreground success");
+    // [scene _setContentState:2]; // 2 == ready, 1 == preparing, 0 == not ready
+    FBScene *scene = [Konban getMainSceneForApp:app];
+    FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy];//ios 15 fix
+    [sceneSettings setForeground:value]; // This is important for the view to be interactable.
+    [scene updateSettings:sceneSettings withTransitionContext:nil]; // Enact the changes made
+    NSLog(@"[Konban] setForeground scene state %lu", scene.contentState);
+    NSLog(@"[Konban] %s", "set foreground success");
 }
 
 +(void)forceBackgrounded:(BOOL)backgrounded forApp:(SBApplication *)app {
-  FBScene *scene = [Konban getMainSceneForApp:app];
-  FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy]; //ios 15 fix
-  [sceneSettings setBackgrounded:backgrounded];
-  [scene updateSettings:sceneSettings withTransitionContext:nil];
-  NSLog(@"[Konban] forceBackgrounded scene state %lu", scene.contentState);
-  NSLog(@"[Konban] %s", "force backgrounded success");
+    FBScene *scene = [Konban getMainSceneForApp:app];
+    FBSMutableSceneSettings *sceneSettings = [[scene settings] mutableCopy]; //ios 15 fix
+    [sceneSettings setBackgrounded:backgrounded];
+    [scene updateSettings:sceneSettings withTransitionContext:nil];
+    NSLog(@"[Konban] forceBackgrounded scene state %lu", scene.contentState);
+    NSLog(@"[Konban] %s", "force backgrounded success");
 }
 
 +(id)createLayerHostView:(NSString *)bundleID { // This is the new implementation to get the view instead of getting it via a FBSceneHostManager which was the old way.
-  SBApplication *app = [Konban app:bundleID];
-  FBScene *scene = [Konban getMainSceneForApp:app];
-  _UISceneLayerHostContainerView *layerHostView=[[objc_getClass("_UISceneLayerHostContainerView") alloc] initWithScene:scene debugDescription:nil]; //updated for ios 15
-  [layerHostView _setPresentationContext:[[objc_getClass("UIScenePresentationContext") alloc] _initWithDefaultValues]];
-  NSLog(@"[Konban] createLayerHostView scene state %lu", scene.contentState);
-  NSLog(@"[Konban] %s", "createLayerHostView success");
-  return layerHostView;
+    SBApplication *app = [Konban app:bundleID];
+    FBScene *scene = [Konban getMainSceneForApp:app];
+    _UISceneLayerHostContainerView *layerHostView=[[objc_getClass("_UISceneLayerHostContainerView") alloc] initWithScene:scene debugDescription:nil]; //updated for ios 15
+    [layerHostView _setPresentationContext:[[objc_getClass("UIScenePresentationContext") alloc] _initWithDefaultValues]];
+    NSLog(@"[Konban] createLayerHostView scene state %lu", scene.contentState);
+    NSLog(@"[Konban] %s", "createLayerHostView success");
+    return layerHostView;
 }
 
 +(void)rehost:(NSString *)bundleID { //not sure why this doesn't get called

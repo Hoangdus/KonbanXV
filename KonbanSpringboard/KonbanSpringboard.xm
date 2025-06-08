@@ -15,8 +15,8 @@ NSString *bundleID = @"com.apple.mobilesafari";
 // UIViewController *ourVC = nil;
 
 CGRect insetByPercent(CGRect f, CGFloat s) {
-  CGFloat originScale = (1.0 - s)/2.0;
-  return CGRectMake(f.origin.x + f.size.width * originScale, f.origin.y + f.size.height * originScale, f.size.width * s, f.size.height * s);
+    CGFloat originScale = (1.0 - s)/2.0;
+    return CGRectMake(f.origin.x + f.size.width * originScale, f.origin.y + f.size.height * originScale, f.size.width * s, f.size.height * s);
 }
 
 %hook SBTodayViewController
@@ -28,31 +28,31 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     %orig;
 
     if(!enabled){
-      for (UIView *view in [self.view subviews]) {
-        view.hidden = NO;
-      }
+        for (UIView *view in [self.view subviews]) {
+            view.hidden = NO;
+        }
 
-      if(self.konSpinnerView){
-        [self.konSpinnerView removeFromSuperview];  
-        self.konSpinnerView = nil;
-      }
-      return;
+        if(self.konSpinnerView){
+            [self.konSpinnerView removeFromSuperview];  
+            self.konSpinnerView = nil;
+        }
+        return;
     }
 
     //TODO: comeback to this later
     // SBLockStateAggregator *lockStateAggregator = [%c(SBLockStateAggregator) sharedInstance];
     // if ((MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState") != 0 || self.view.tag == 5)) {
-    //   if (!useInNC && MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState") == 1) {
-    //     [self.konHostView removeFromSuperview]; 
-    //       for (UIView *view in [self.view subviews]) {
-    //         view.hidden = NO;
-    //       }
-    //     return;
-    //   }
+    //     if (!useInNC && MSHookIvar<NSUInteger>(lockStateAggregator, "_lockState") == 1) {
+    //         [self.konHostView removeFromSuperview]; 
+    //         for (UIView *view in [self.view subviews]) {
+    //             view.hidden = NO;
+    //         }
+    //         return;
+    //     }
     // }
 
     for (UIView *view in [self.view subviews]) {
-      view.hidden = YES;
+        view.hidden = YES;
     }
 
     if (enabled) {
@@ -61,13 +61,13 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         // [self.konHostView removeFromSuperview];
 
         if (!self.konSpinnerView){
-          self.konSpinnerView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
-          self.konSpinnerView.backgroundColor = [UIColor whiteColor];
-          self.konSpinnerView.hidesWhenStopped = YES;
-          self.konSpinnerView.frame = self.view.frame;
-          self.konSpinnerView.transform = CGAffineTransformMakeScale(scale, scale);
-          self.konSpinnerView.layer.cornerRadius = cornerRadius;
-          self.konSpinnerView.layer.masksToBounds = true;
+            self.konSpinnerView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
+            self.konSpinnerView.backgroundColor = [UIColor whiteColor];
+            self.konSpinnerView.hidesWhenStopped = YES;
+            self.konSpinnerView.frame = self.view.frame;
+            self.konSpinnerView.transform = CGAffineTransformMakeScale(scale, scale);
+            self.konSpinnerView.layer.cornerRadius = cornerRadius;
+            self.konSpinnerView.layer.masksToBounds = true;
         }
         [self.view addSubview:self.konSpinnerView];
         [self.konSpinnerView startAnimating];
@@ -76,17 +76,17 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         NSLog(@"[Konban] bundleID: %@", bundleID);
 
         @try {
-        [self.konSpinnerView stopAnimating];
-        self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
+            [self.konSpinnerView stopAnimating];
+            self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
         }
         @catch (NSException *exception){
-          if (exception) {
-            %log(@"konView ERROR:%@", exception);
-          }
+            if (exception) {
+                %log(@"konView ERROR:%@", exception);
+            }
         }
 
         if(self.konHostView){
-        [self.konSpinnerView stopAnimating];
+            [self.konSpinnerView stopAnimating];
         }
 
         %log(@"[konban] konHostView: %@", self.konHostView);
@@ -128,7 +128,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
 %end
 
 void changeApp() {
-    	NSDictionary *appList = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"me.nepeta.konban-app"];
+    NSDictionary *appList = [[NSUserDefaults standardUserDefaults] persistentDomainForName:@"me.nepeta.konban-app"];
     if (!appList) return;
 
     if ([appList objectForKey:@"selectedApplication"]) {
