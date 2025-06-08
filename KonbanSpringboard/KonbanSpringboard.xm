@@ -1,10 +1,5 @@
 #import "KonbanSpringboard.h"
 #import "Konban.h"
-//#import <AppList/AppList.h>
-
-@interface UIScene ()
--(id)_identifier;
-@end
 
 HBPreferences *preferences;
 BOOL dpkgInvalid = false;
@@ -36,10 +31,6 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
       for (UIView *view in [self.view subviews]) {
         view.hidden = NO;
       }
-      
-      if(self.konHostView){
-        [self.konHostView removeFromSuperview]; 
-      }
 
       if(self.konSpinnerView){
         [self.konSpinnerView removeFromSuperview];  
@@ -67,7 +58,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
     if (enabled) {
         [self.konSpinnerView stopAnimating];
         // [self.konSpinnerView removeFromSuperview];
-        [self.konHostView removeFromSuperview];
+        // [self.konHostView removeFromSuperview];
 
         if (!self.konSpinnerView){
           self.konSpinnerView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleLarge];
@@ -85,6 +76,7 @@ CGRect insetByPercent(CGRect f, CGFloat s) {
         NSLog(@"[Konban] bundleID: %@", bundleID);
 
         @try {
+        [self.konSpinnerView stopAnimating];
         self.konHostView = [Konban viewFor:bundleID]; //prevent crashes by putting it in a try-catch block. While the app is loading, the FBSceneLayer will return nil, which will cause a crash.
         }
         @catch (NSException *exception){

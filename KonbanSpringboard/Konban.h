@@ -1,4 +1,3 @@
-// #import "../headers/FBScene.h"
 #import "../headers/SBApplication.h"
 #import "../headers/SBApplicationController.h"
 
@@ -10,11 +9,6 @@
 
 @interface FBSceneWorkspace : NSObject
 + (id)sharedInstance;
-@end
-
-@interface FBSceneLayerManager
-@property (nonatomic)NSHashTable *_observers;
-@property (nonatomic, strong)NSHashTable *layers;
 @end
 
 @interface _UIContextLayerHostView : UIView
@@ -29,9 +23,6 @@
 
 @interface UIScenePresentationContext : NSObject
 - (id)_initWithDefaultValues;
-@end
-
-@interface FBSceneLayer : NSObject
 @end
 
 @interface FBSMutableSceneSettings (Private)
@@ -53,6 +44,6 @@
 +(void)dehost:(NSString *)bundleID;
 +(void)setForeground:(SBApplication *)app foregroundvalue:(BOOL)value;
 +(id)createLayerHostView:(NSString *)bundleID;
-+ (FBScene *)getMainSceneForApp:(SBApplication *)application;
++(FBScene *)getMainSceneForApp:(SBApplication *)application;
 
 @end
