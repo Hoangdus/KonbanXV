@@ -2,7 +2,7 @@ Package: com.hoangdus.konban
 Name: KonbanXV
 Depends: mobilesubstrate, ws.hbang.common (>= 1.11), firmware (>= 15.0), com.opa334.altlist, preferenceloader
 Conflicts: me.nepeta.konban, com.nicho1asdev.konban
-Version: 1.0.0
+Version: 1.0.1
 Architecture: iphoneos-arm
 Description: An app in "Today" view. Rewritten for iOS 15 and 16 by HoangDus.
 Maintainer: HoangDus
