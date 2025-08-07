@@ -3,7 +3,7 @@ KonbanXV
 
 Swipe right for an App.\
 An iOS extention(Tweak) that put an app in iOS today view.\
-Support iOS from 15 to 16 (newer might still be supporte, iPadOS might not work)
+Support iOS from 15 to 16 (newer might still be supported, iPadOS might not work)
 
 [<img src="https://github.com/Hoangdus/KonbanXV/blob/main/havoc_get_square.png" alt="drawing" width="500"/>](https://havoc.app/package/konbanxv)
 
